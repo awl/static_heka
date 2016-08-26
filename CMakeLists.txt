@@ -85,11 +85,11 @@ elseif(APPLE)
     set(LUA_SHARED_LIBRARY_SUFFIX ".so")
 elseif(UNIX)
     set(CPACK_GENERATOR "TGZ")
-    set(LDFLAGS "-ldflags=\"-s\"")
+    set(LDFLAGS "-ldflags=\"-r=/opt/heka/lib/glibc/usr/lib,-extldflags='-R/opt/heka/lib/glibc/usr/lib,--dynamic-linker=/opt/heka/lib/glibc/usr/lib/ld-linux-x86-64.so.2'\"")
     if(NOT CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
         set(LINK_DL "-ldl")
     endif()
-    set(CGO_LDFLAGS "cgo LDFLAGS: -Wl,-rpath,$ORIGIN/../lib ${LUA_LIB_PATH}/libluasandbox.so ${LUA_LIB_PATH}/libluasb.so ${LINK_DL} -lm")
+    set(CGO_LDFLAGS "cgo LDFLAGS: -Wl,-rpath,/opt/heka/lib/glibc/usr/lib,-rpath,$ORIGIN/../lib -Wl,--dynamic-linker=/opt/heka/lib/glibc/usr/lib/ld-linux-x86-64.so.2 ${LUA_LIB_PATH}/libluasandbox.so ${LUA_LIB_PATH}/libluasb.so ${LINK_DL} -lm")
 
     find_program(DPKG_EXECUTABLE dpkg PATH_SUFFIXES bin)
 
